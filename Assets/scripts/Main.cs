@@ -15,12 +15,18 @@ public class Main : MonoBehaviour
     public static float BOARD_HEIGHT;
     public static float BOARD_RADIUS;
     public static Vector2 BOARD_CENTER;
-    public const float SPAWN_COOLDOWN = 1f;
-    float lastEnemySpawn;
-    Vector2 lastSwipeStart;
-    Vector2 lastSwipeEnd;
-    bool touching;
-    Swipe currentSwipe;
+    public static Level CURRENT_LEVEL;
+
+    public static bool Clicked { get { return click; } }
+
+    public static Vector2 TouchScreenLocation { get { return touchScreenLocation; } }
+    public static Vector2 TouchBoardLocation { get { return ScreenLocationToBoardLocation(touchScreenLocation); } }
+
+    public static bool Touching { get { return touching; } }
+
+    static bool click;
+    static Vector2 touchScreenLocation;
+    static bool touching;
 
     void Start ()
     {
@@ -60,63 +66,58 @@ public class Main : MonoBehaviour
         Debug.Log (string.Format ("BOARD_RADIUS: {0}", BOARD_RADIUS));
         Debug.Log (string.Format ("BOARD_CENTER: {0}", BOARD_CENTER));
 
-        touching = false;
-        lastEnemySpawn = -SPAWN_COOLDOWN;
-        currentSwipe = null;
+        ChangeLevels (new StartScreen ());
     }
     
     void Update ()
     {
+        if (Input.GetKeyUp (KeyCode.Escape)) {
+            if (CURRENT_LEVEL is StartScreen) {
+                Application.Quit ();
+            } else {
+                ChangeLevels (new StartScreen ());
+            }
+        }
 
         if (Input.touchCount > 0 | Input.GetMouseButton (0)) {
-            Vector2 location = Input.touchCount > 0 ? Input.GetTouch (0).position : (Vector2)Input.mousePosition;
-            if (!touching) {
-                lastSwipeStart = location;
-
-                currentSwipe = ((GameObject)Instantiate (Resources.Load ("swipe"))).GetComponent<Swipe> ();
-            }
-            lastSwipeEnd = location;
-            currentSwipe.SetStartAndEnd (InputLocationToBoardLocation (lastSwipeStart), InputLocationToBoardLocation (lastSwipeEnd));
+            Vector2 tempLocation = Input.touchCount > 0 ? Input.GetTouch (0).position : (Vector2)Input.mousePosition;
+            touchScreenLocation = new Vector2 (tempLocation.x, tempLocation.y);
+            click = !touching;
             touching = true;
         } else {
-            if (touching) {
-                Swipe (InputLocationToBoardLocation (lastSwipeStart), InputLocationToBoardLocation (lastSwipeEnd));
-                currentSwipe.Destroy ();
-            }
+            click = false;
             touching = false;
         }
 
-        if (lastEnemySpawn < Time.time - SPAWN_COOLDOWN) {
-            lastEnemySpawn = Time.time;
-            Instantiate (Resources.Load ("enemy"));
-        }
-
+        CURRENT_LEVEL.Update ();
     }
-    
-    public void Swipe (Vector2 start, Vector2 end)
+
+    void OnGUI ()
     {
-        RaycastHit2D[] hitObjects = Physics2D.LinecastAll (start, end);
-        float damage = GetBaseDamage () * GetDamageRatioForLength (Vector2.Distance (start, end));
-        foreach (RaycastHit2D hitObject in hitObjects) {
-            GameObject hitGameObject = hitObject.collider.gameObject;
-            if (hitGameObject.tag == "Enemy") {
-                hitGameObject.GetComponent<Enemy> ().Hit (damage);
-            }
-        }
+        CURRENT_LEVEL.OnGUI ();
     }
 
-    public float GetBaseDamage ()
+    public static float GetBaseDamage ()
     {
         return 1;
     }
 
-    public float GetDamageRatioForLength (float length)
+    public static float GetDamageRatioForLength (float length)
     {
         return 1f - (1f * (length / BOARD_WIDTH));
     }
 
-    public static Vector2 InputLocationToBoardLocation (Vector2 inputLocation)
+    public static Vector2 ScreenLocationToBoardLocation (Vector2 inputLocation)
     {
         return new Vector2 (BOARD_WIDTH * (inputLocation.x / NATIVE_WIDTH), BOARD_HEIGHT * (inputLocation.y / NATIVE_HEIGHT));
+    }
+
+    public static void ChangeLevels (Level level)
+    {
+        if (CURRENT_LEVEL != null) {
+            CURRENT_LEVEL.End ();
+        }
+        CURRENT_LEVEL = level;
+        CURRENT_LEVEL.Begin ();
     }
 }
