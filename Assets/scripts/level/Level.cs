@@ -9,5 +9,7 @@ public abstract class Level {
 	public virtual void OnGUI() {}
 	
 	public virtual void End() {}
+
+    public virtual void EnemyAttack(Enemy enemy) {}
 	
 }

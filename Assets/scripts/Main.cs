@@ -97,6 +97,10 @@ public class Main : MonoBehaviour
         CURRENT_LEVEL.OnGUI ();
     }
 
+    public static void EnemyAttack(Enemy enemy) {
+        CURRENT_LEVEL.EnemyAttack(enemy);
+    }
+
     public static float GetBaseDamage ()
     {
         return 1;

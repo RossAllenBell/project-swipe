@@ -8,10 +8,13 @@ public class Enemy : MonoBehaviour
     public const float HIT_FADE_DUR = 0.1f;
     public const float HIT_FADE = 0.6f;
     public const float MAX_HP = 6;
+    public const float ATTACK_COOLDOWN = 0.75f;
+
     float lastHit;
     Vector2 destination;
     float speed;
     float hp;
+    float lastAttack;
     
     void Start ()
     {
@@ -21,11 +24,17 @@ public class Enemy : MonoBehaviour
 
         lastHit = -HIT_FADE_DUR;
         hp = MAX_HP;
+        lastAttack = 0;
     }
     
     void Update ()
     {
-        transform.position = Vector2.MoveTowards (transform.position, destination, speed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, destination) > 0) {
+            transform.position = Vector2.MoveTowards (transform.position, destination, speed * Time.deltaTime);
+        } else if(Time.time - lastAttack >= ATTACK_COOLDOWN) {
+            Main.EnemyAttack(this);
+            lastAttack = Time.time;
+        }
 
         float fade = 1 - (HIT_FADE * Mathf.Max (0, 1 - ((Time.time - lastHit) / HIT_FADE_DUR)));
         gameObject.GetComponent<SpriteRenderer> ().color = new Color (1, 1, 1, fade);

@@ -7,3 +7,4 @@ Temp/
 *.exe
 *_Data/
 *.keystore
+*.pdb
