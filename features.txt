@@ -1,5 +1,5 @@
 Project Swipe
-Castle defenders style game where you hit enemies by swiping them as they run towards
+Castle defenders style game where you hit enemies by swiping them as they run towards your castle
 	names
 		Hinterlands Outpost
 		Last Outpost
@@ -9,7 +9,6 @@ Castle defenders style game where you hit enemies by swiping them as they run to
 		Hinterlands synonyms: backwoods, wilds, backcountry
 		Outpost synonyms: frontier, station, settlement
 		Hinterlands Defense
-    your castle
     themed as wooden palisade fort in the wilderness
     drag finger to increase swipe length, but at a reduced amount of damage, smallswipes do most damage
     fortress additions

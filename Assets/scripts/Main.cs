@@ -14,7 +14,8 @@ public class Main : MonoBehaviour
     public static float BoardWidth;
     public static float BoardHeight;
     public static float BoardRadius;
-    public static Vector2 BoardCenter;
+    public static Vector3 BoardCenter;
+    public static Vector3 BaseCenter;
     public const float BasicallyZero = 0.0001f;
     public static Scene CurrentScene;
     public const float StartingBaseHealth = 100f;
@@ -48,13 +49,11 @@ public class Main : MonoBehaviour
         BoardHeight = 2f * Camera.main.orthographicSize;
         BoardWidth = BoardHeight * Camera.main.aspect;
         
-        Vector3 newCameraLocation = Camera.main.transform.position;
-        newCameraLocation.y = newOrthoSize;
-        newCameraLocation.x = BoardWidth / 2f;
-        Camera.main.transform.position = newCameraLocation;
-
         BoardRadius = (Mathf.Sqrt (Mathf.Pow (BoardWidth, 2) + Mathf.Pow (BoardHeight, 2))) / 2f;
-        BoardCenter = new Vector2 (BoardWidth / 2f, BoardHeight / 2f);
+        BoardCenter = new Vector3 (BoardWidth / 2f, BoardHeight / 2f, Camera.main.transform.position.z);
+        BaseCenter = new Vector3 (BoardWidth * 1.5f, BoardHeight / 2f, Camera.main.transform.position.z);
+        
+        Camera.main.transform.position = BaseCenter;
 
         GameObject.Find ("background").GetComponent<Background> ().Reposition ();
 
