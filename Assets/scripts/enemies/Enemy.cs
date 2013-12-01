@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
 
-    public const float MinSpeed = 0.2f;
-    public const float MaxSpeed = 0.5f;
     public const float HitFadeDur = 0.1f;
     public const float HitFade = 0.6f;
-    public const float MaxHp = 6;
-    public const float AttackCooldown = 0.75f;
+    public const float DefaultMinSpeed = 0.4f;
+    public const float DefaultMaxSpeed = 0.6f;
+    public const float DefaultMaxHp = 10f;
+    public const float DefaultAttackCooldown = 0.75f;
+
+    virtual protected float MinSpeed { get{return DefaultMinSpeed;} }
+    virtual protected float MaxSpeed { get{return DefaultMaxSpeed;} }
+    virtual protected float MaxHp { get{return DefaultMaxHp;} }
+    virtual protected float AttackCooldown { get{return DefaultAttackCooldown;} }
 
     float lastHit;
     Vector2 destination;

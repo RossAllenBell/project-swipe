@@ -8,6 +8,7 @@ Castle defenders style game where you hit enemies by swiping them as they run to
 		Forward Post
 		Hinterlands synonyms: backwoods, wilds, backcountry
 		Outpost synonyms: frontier, station, settlement
+		Hinterlands Defense
     your castle
     themed as wooden palisade fort in the wilderness
     drag finger to increase swipe length, but at a reduced amount of damage, smallswipes do most damage
@@ -53,3 +54,4 @@ Castle defenders style game where you hit enemies by swiping them as they run to
         fast guy that goes from corpse to corpse “stealing” gold rewards and can be killed for the collected rewards
     some mechanic to send waves of monsters to friends’ fortresses
     website
+    tutorial-like help
