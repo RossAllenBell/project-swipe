@@ -1,0 +1,55 @@
+Project Swipe
+Castle defenders style game where you hit enemies by swiping them as they run towards
+	names
+		Hinterlands Outpost
+		Last Outpost
+		Final Outpost
+		Last Stand
+		Forward Post
+		Hinterlands synonyms: backwoods, wilds, backcountry
+		Outpost synonyms: frontier, station, settlement
+    your castle
+    themed as wooden palisade fort in the wilderness
+    drag finger to increase swipe length, but at a reduced amount of damage, smallswipes do most damage
+    fortress additions
+        archers
+        carpenters
+        alchemists
+        moat
+    attack buffs
+        damage increase
+        reduce damage reduction from long swipes
+    buildings for upgrades
+        architects office
+        alchemy hall
+        archery range
+        armory
+        siege shop
+    make upgrades not so linear… make them something to explore and discover
+    currency system?
+        xp
+        gold
+        resources
+    seasons
+    reinforcement caravans from the capital city
+        caravan starts at enemy spawn point and slowly travels to castle as enemies spawn faster and faster to try and kill the caravan
+    IAPs?
+    scoreboards
+        top 10
+        10 players closest to you
+    flying monsters
+    achievements
+    purchased helpers level up
+    special monsters that attack helpers
+    background parallax
+    environmental effects like birds
+    different monsters
+        shields others from damage
+        heals others
+        carries a bomb that will damage monsters and the walls if near
+        catapult that needs time to set up
+        runs fast
+        big guy that throws enemies
+        fast guy that goes from corpse to corpse “stealing” gold rewards and can be killed for the collected rewards
+    some mechanic to send waves of monsters to friends’ fortresses
+    website
