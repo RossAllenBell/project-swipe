@@ -54,6 +54,10 @@ public abstract class Week : Level {
             lastEnemySpawn = Time.time;
             enemies.Add((GameObject)Object.Instantiate (Resources.Load ("enemy")));
         }
+
+        if (baseHealth <= 0) {
+            Main.ChangeLevels(new EndScreen());
+        }
     }
     
     public override void OnGUI()
