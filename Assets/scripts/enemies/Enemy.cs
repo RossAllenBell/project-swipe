@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     float hp;
     float lastAttack;
     
-    void Start ()
+    public virtual void Start ()
     {
         transform.position = new Vector2 (-0.5f, (Random.value * Main.BoardHeight * 0.66f) + 0.5f);
         destination = new Vector2 (Main.BoardWidth - 1, transform.position.y);
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         lastAttack = 0;
     }
     
-    void Update ()
+    public virtual void Update ()
     {
         if (Vector2.Distance(transform.position, destination) > 0) {
             transform.position = Vector2.MoveTowards (transform.position, destination, speed * Time.deltaTime);
@@ -40,11 +40,12 @@ public class Enemy : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer> ().color = new Color (1, 1, 1, fade);
 
         if (hp <= 0) {
+            Main.CurrentScene.EnemyDie(gameObject);
             Destroy (gameObject);
         }
     }
 
-    public void Hit (float damage)
+    public virtual void Hit (float damage)
     {
         lastHit = Time.time;
         hp -= damage;

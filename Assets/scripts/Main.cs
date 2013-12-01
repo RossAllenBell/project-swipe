@@ -15,8 +15,9 @@ public class Main : MonoBehaviour
     public static float BoardHeight;
     public static float BoardRadius;
     public static Vector2 BoardCenter;
-    public static Scene CurrentScene;
     public const float BasicallyZero = 0.0001f;
+    public static Scene CurrentScene;
+    public const float StartingBaseHealth = 100f;
 
     public static bool Clicked { get { return click; } }
 
@@ -78,6 +79,12 @@ public class Main : MonoBehaviour
             } else {
                 ChangeScenes (new StartScreen ());
             }
+        }
+
+        if (Input.GetKey (KeyCode.Space)) {
+            Time.timeScale = 5.0f;
+        } else {
+            Time.timeScale = 1.0f;
         }
 
         if (Input.touchCount > 0 | Input.GetMouseButton (0)) {

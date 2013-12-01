@@ -11,5 +11,7 @@ public abstract class Scene {
 	public virtual void End() {}
 
     public virtual void EnemyAttack(Enemy enemy) {}
+
+    public virtual void EnemyDie(GameObject enemy) {}
 	
 }

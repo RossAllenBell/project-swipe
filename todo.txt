@@ -1,4 +1,5 @@
 second demo level
+differentiate second enemy
 base mode where you upgrade stuff and start next challenge
 break background into separate sprites
 add currency accumulated through enemy kills

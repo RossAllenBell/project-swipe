@@ -3,13 +3,9 @@ using System.Collections.Generic;
 
 public abstract class EnemyWave : Scene {
 
-    public const float SpawnCooldown = 1f;
-    public const float MaxBaseHealth = 100f;
-
     public static Vector2 HealthBarSize = new Vector2(0.8f * Main.NativeWidth, 0.05f * Main.NativeHeight);
     public static Vector2 HealthBarPadding = new Vector2((Main.NativeWidth - HealthBarSize.x) / 2, HealthBarSize.y);
 
-    float lastEnemySpawn;
     Vector2 lastSwipeStart;
     Vector2 lastSwipeEnd;
     bool wasTouching;
@@ -18,18 +14,19 @@ public abstract class EnemyWave : Scene {
     Texture2D healthBarTexture;
     GUIStyle healthBarStyle;
 
-    float baseHealth = MaxBaseHealth;
     List<GameObject> enemies;
-    
+    float baseHealth;
+
     public override void Begin() {
         healthBarTexture = Resources.Load ("media/ui/health-bar") as Texture2D;
         healthBarStyle = new GUIStyle();
         healthBarStyle.normal.background = healthBarTexture;
 
-        enemies = new List<GameObject>();
         wasTouching = false;
-        lastEnemySpawn = -SpawnCooldown;
         currentSwipe = null;
+
+        enemies = new List<GameObject>();
+        baseHealth = Main.StartingBaseHealth;
     }
     
     public override void Update() {
@@ -49,11 +46,6 @@ public abstract class EnemyWave : Scene {
             }
             wasTouching = false;
         }
-        
-        if (lastEnemySpawn < Time.time - SpawnCooldown) {
-            lastEnemySpawn = Time.time;
-            enemies.Add((GameObject)Object.Instantiate (Resources.Load ("enemy")));
-        }
 
         if (baseHealth <= 0) {
             Main.ChangeScenes(new EndScreen());
@@ -62,13 +54,14 @@ public abstract class EnemyWave : Scene {
     
     public override void OnGUI()
     {
-        GUI.Box(new Rect(HealthBarPadding.x, HealthBarPadding.y, HealthBarSize.x * (baseHealth / MaxBaseHealth), HealthBarSize.y), GUIContent.none, healthBarStyle);
+        GUI.Box(new Rect(HealthBarPadding.x, HealthBarPadding.y, HealthBarSize.x * (baseHealth / Main.StartingBaseHealth), HealthBarSize.y), GUIContent.none, healthBarStyle);
     }
     
     public override void End() {
         foreach(GameObject enemy in enemies) {
             Object.Destroy(enemy);
         }
+        enemies.Clear();
     }
     
     public void Swipe (Vector2 start, Vector2 end)
@@ -86,6 +79,21 @@ public abstract class EnemyWave : Scene {
     public override void EnemyAttack(Enemy enemy)
     {
         baseHealth = Mathf.Max(0, baseHealth - 1);
+    }
+
+    public override void EnemyDie(GameObject enemy)
+    {
+        enemies.Remove(enemy);
+    }
+
+    protected void AddSpawnedEnemy(GameObject enemy)
+    {
+        enemies.Add(enemy);
+    }
+
+    protected bool EnemiesAlive()
+    {
+        return enemies.Count > 0;
     }
     
 }
