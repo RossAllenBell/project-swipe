@@ -3,19 +3,20 @@
 public class Main : MonoBehaviour
 {
 
-    public const int NORMAL_WIDTH = 1920;
-    public const int NORMAL_HEIGHT = 1080;
-    public const float DESIRED_BOARD_WIDTH = 10f;
-    public static float GUI_RATIO;
-    public static float GUI_RATIO_WIDTH;
-    public static float GUI_RATIO_HEIGHT;
-    public static int NATIVE_WIDTH;
-    public static int NATIVE_HEIGHT;
-    public static float BOARD_WIDTH;
-    public static float BOARD_HEIGHT;
-    public static float BOARD_RADIUS;
-    public static Vector2 BOARD_CENTER;
-    public static Level CURRENT_LEVEL;
+    public const int NormalWidth = 1920;
+    public const int NormalHeight = 1080;
+    public const float DesiredBoardWidth = 10f;
+    public static float GuiRatio;
+    public static float GuiRatioWidth;
+    public static float GuiRatioHeight;
+    public static int NativeWidth;
+    public static int NativeHeight;
+    public static float BoardWidth;
+    public static float BoardHeight;
+    public static float BoardRadius;
+    public static Vector2 BoardCenter;
+    public static Level CurrentLevel;
+    public const float BasicallyZero = 0.0001f;
 
     public static bool Clicked { get { return click; } }
 
@@ -32,39 +33,39 @@ public class Main : MonoBehaviour
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         
-        NATIVE_WIDTH = Screen.width;
-        NATIVE_HEIGHT = Screen.height;
+        NativeWidth = Screen.width;
+        NativeHeight = Screen.height;
         
-        GUI_RATIO_WIDTH = (float)NATIVE_WIDTH / (float)NORMAL_WIDTH;
-        GUI_RATIO_HEIGHT = (float)NATIVE_WIDTH / (float)NORMAL_WIDTH;
-        GUI_RATIO = Mathf.Min (GUI_RATIO_WIDTH, GUI_RATIO_HEIGHT);
+        GuiRatioWidth = (float)NativeWidth / (float)NormalWidth;
+        GuiRatioHeight = (float)NativeWidth / (float)NormalWidth;
+        GuiRatio = Mathf.Min (GuiRatioWidth, GuiRatioHeight);
         
         //just makes sure the game view width is always 10 units wide
-        float newOrthoSize = ((DESIRED_BOARD_WIDTH * NATIVE_HEIGHT) / NATIVE_WIDTH) / 2f;
+        float newOrthoSize = ((DesiredBoardWidth * NativeHeight) / NativeWidth) / 2f;
         Camera.main.orthographicSize = newOrthoSize;
         
-        BOARD_HEIGHT = 2f * Camera.main.orthographicSize;
-        BOARD_WIDTH = BOARD_HEIGHT * Camera.main.aspect;
+        BoardHeight = 2f * Camera.main.orthographicSize;
+        BoardWidth = BoardHeight * Camera.main.aspect;
         
         Vector3 newCameraLocation = Camera.main.transform.position;
         newCameraLocation.y = newOrthoSize;
-        newCameraLocation.x = BOARD_WIDTH / 2f;
+        newCameraLocation.x = BoardWidth / 2f;
         Camera.main.transform.position = newCameraLocation;
 
-        BOARD_RADIUS = (Mathf.Sqrt (Mathf.Pow (BOARD_WIDTH, 2) + Mathf.Pow (BOARD_HEIGHT, 2))) / 2f;
-        BOARD_CENTER = new Vector2 (BOARD_WIDTH / 2f, BOARD_HEIGHT / 2f);
+        BoardRadius = (Mathf.Sqrt (Mathf.Pow (BoardWidth, 2) + Mathf.Pow (BoardHeight, 2))) / 2f;
+        BoardCenter = new Vector2 (BoardWidth / 2f, BoardHeight / 2f);
 
         GameObject.Find ("background").GetComponent<Background> ().Reposition ();
 
-        Debug.Log (string.Format ("GUI_RATIO: {0}", GUI_RATIO));
-        Debug.Log (string.Format ("GUI_RATIO_WIDTH: {0}", GUI_RATIO_WIDTH));
-        Debug.Log (string.Format ("GUI_RATIO_HEIGHT: {0}", GUI_RATIO_HEIGHT));
-        Debug.Log (string.Format ("NATIVE_WIDTH: {0}", NATIVE_WIDTH));
-        Debug.Log (string.Format ("NATIVE_HEIGHT: {0}", NATIVE_HEIGHT));
-        Debug.Log (string.Format ("BOARD_WIDTH: {0}", BOARD_WIDTH));
-        Debug.Log (string.Format ("BOARD_HEIGHT: {0}", BOARD_HEIGHT));
-        Debug.Log (string.Format ("BOARD_RADIUS: {0}", BOARD_RADIUS));
-        Debug.Log (string.Format ("BOARD_CENTER: {0}", BOARD_CENTER));
+        Debug.Log (string.Format ("GUI_RATIO: {0}", GuiRatio));
+        Debug.Log (string.Format ("GUI_RATIO_WIDTH: {0}", GuiRatioWidth));
+        Debug.Log (string.Format ("GUI_RATIO_HEIGHT: {0}", GuiRatioHeight));
+        Debug.Log (string.Format ("NATIVE_WIDTH: {0}", NativeWidth));
+        Debug.Log (string.Format ("NATIVE_HEIGHT: {0}", NativeHeight));
+        Debug.Log (string.Format ("BOARD_WIDTH: {0}", BoardWidth));
+        Debug.Log (string.Format ("BOARD_HEIGHT: {0}", BoardHeight));
+        Debug.Log (string.Format ("BOARD_RADIUS: {0}", BoardRadius));
+        Debug.Log (string.Format ("BOARD_CENTER: {0}", BoardCenter));
 
         ChangeLevels (new StartScreen ());
     }
@@ -72,7 +73,7 @@ public class Main : MonoBehaviour
     void Update ()
     {
         if (Input.GetKeyUp (KeyCode.Escape)) {
-            if (CURRENT_LEVEL is StartScreen) {
+            if (CurrentLevel is StartScreen) {
                 Application.Quit ();
             } else {
                 ChangeLevels (new StartScreen ());
@@ -89,16 +90,16 @@ public class Main : MonoBehaviour
             touching = false;
         }
 
-        CURRENT_LEVEL.Update ();
+        CurrentLevel.Update ();
     }
 
     void OnGUI ()
     {
-        CURRENT_LEVEL.OnGUI ();
+        CurrentLevel.OnGUI ();
     }
 
     public static void EnemyAttack(Enemy enemy) {
-        CURRENT_LEVEL.EnemyAttack(enemy);
+        CurrentLevel.EnemyAttack(enemy);
     }
 
     public static float GetBaseDamage ()
@@ -108,20 +109,20 @@ public class Main : MonoBehaviour
 
     public static float GetDamageRatioForLength (float length)
     {
-        return 1f - (1f * (length / BOARD_WIDTH));
+        return 1f - (1f * (length / BoardWidth));
     }
 
     public static Vector2 ScreenLocationToBoardLocation (Vector2 inputLocation)
     {
-        return new Vector2 (BOARD_WIDTH * (inputLocation.x / NATIVE_WIDTH), BOARD_HEIGHT * (inputLocation.y / NATIVE_HEIGHT));
+        return new Vector2 (BoardWidth * (inputLocation.x / NativeWidth), BoardHeight * (inputLocation.y / NativeHeight));
     }
 
     public static void ChangeLevels (Level level)
     {
-        if (CURRENT_LEVEL != null) {
-            CURRENT_LEVEL.End ();
+        if (CurrentLevel != null) {
+            CurrentLevel.End ();
         }
-        CURRENT_LEVEL = level;
-        CURRENT_LEVEL.Begin ();
+        CurrentLevel = level;
+        CurrentLevel.Begin ();
     }
 }

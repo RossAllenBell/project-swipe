@@ -7,7 +7,7 @@ public class StartScreen : Level
 
     public StartScreen ()
     {
-        startGameRect = new Rect (Main.NATIVE_WIDTH / 3, Main.NATIVE_HEIGHT / 3, Main.NATIVE_WIDTH / 3, Main.NATIVE_HEIGHT / 3);
+        startGameRect = new Rect (Main.NativeWidth / 3, Main.NativeHeight / 3, Main.NativeWidth / 3, Main.NativeHeight / 3);
         startButtonTexture = Resources.Load ("media/ui/start-button") as Texture2D;
     }
     

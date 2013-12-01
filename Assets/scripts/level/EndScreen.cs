@@ -7,7 +7,7 @@ public class EndScreen : Level
     
     public EndScreen ()
     {
-        endGameRect = new Rect (Main.NATIVE_WIDTH / 3, Main.NATIVE_HEIGHT / 3, Main.NATIVE_WIDTH / 3, Main.NATIVE_HEIGHT / 3);
+        endGameRect = new Rect (Main.NativeWidth / 3, Main.NativeHeight / 3, Main.NativeWidth / 3, Main.NativeHeight / 3);
         endButtonTexture = Resources.Load ("media/ui/end-button") as Texture2D;
     }
     

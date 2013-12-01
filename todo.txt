@@ -1,3 +1,2 @@
-base death
 base mode where you upgrade stuff and start next challenge
 break background into separate sprites

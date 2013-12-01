@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Swipe : MonoBehaviour
 {
@@ -22,7 +21,7 @@ public class Swipe : MonoBehaviour
         transform.localScale = new Vector2 (distance, 1f);
 
         Vector2 vectorBetween = start - end;
-        float angle = (vectorBetween.y == 0 ? (vectorBetween.x > 0 ? 0f : Mathf.PI) : Mathf.Atan2 (vectorBetween.y, vectorBetween.x)) * -180 / Mathf.PI;
+        float angle = (Mathf.Abs(vectorBetween.y) <= Main.BasicallyZero ? (vectorBetween.x > 0 ? 0f : Mathf.PI) : Mathf.Atan2 (vectorBetween.y, vectorBetween.x)) * -180 / Mathf.PI;
         transform.rotation = Quaternion.AngleAxis (angle, Vector3.back);
     }
 
