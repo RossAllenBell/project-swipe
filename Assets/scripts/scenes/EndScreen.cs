@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EndScreen : Level
+public class EndScreen : Scene
 {
     readonly Rect endGameRect;
     readonly Texture2D endButtonTexture;
@@ -14,7 +14,7 @@ public class EndScreen : Level
     public override void Update ()
     {
         if (Main.Clicked && endGameRect.Contains (Main.TouchScreenLocation)) {
-            Main.ChangeLevels (new StartScreen());
+            Main.ChangeScenes (new StartScreen());
         }
     }
     

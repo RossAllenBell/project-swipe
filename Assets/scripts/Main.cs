@@ -15,7 +15,7 @@ public class Main : MonoBehaviour
     public static float BoardHeight;
     public static float BoardRadius;
     public static Vector2 BoardCenter;
-    public static Level CurrentLevel;
+    public static Scene CurrentScene;
     public const float BasicallyZero = 0.0001f;
 
     public static bool Clicked { get { return click; } }
@@ -67,16 +67,16 @@ public class Main : MonoBehaviour
         Debug.Log (string.Format ("BOARD_RADIUS: {0}", BoardRadius));
         Debug.Log (string.Format ("BOARD_CENTER: {0}", BoardCenter));
 
-        ChangeLevels (new StartScreen ());
+        ChangeScenes (new StartScreen ());
     }
     
     void Update ()
     {
         if (Input.GetKeyUp (KeyCode.Escape)) {
-            if (CurrentLevel is StartScreen) {
+            if (CurrentScene is StartScreen) {
                 Application.Quit ();
             } else {
-                ChangeLevels (new StartScreen ());
+                ChangeScenes (new StartScreen ());
             }
         }
 
@@ -90,16 +90,16 @@ public class Main : MonoBehaviour
             touching = false;
         }
 
-        CurrentLevel.Update ();
+        CurrentScene.Update ();
     }
 
     void OnGUI ()
     {
-        CurrentLevel.OnGUI ();
+        CurrentScene.OnGUI ();
     }
 
     public static void EnemyAttack(Enemy enemy) {
-        CurrentLevel.EnemyAttack(enemy);
+        CurrentScene.EnemyAttack(enemy);
     }
 
     public static float GetBaseDamage ()
@@ -117,12 +117,12 @@ public class Main : MonoBehaviour
         return new Vector2 (BoardWidth * (inputLocation.x / NativeWidth), BoardHeight * (inputLocation.y / NativeHeight));
     }
 
-    public static void ChangeLevels (Level level)
+    public static void ChangeScenes (Scene scene)
     {
-        if (CurrentLevel != null) {
-            CurrentLevel.End ();
+        if (CurrentScene != null) {
+            CurrentScene.End ();
         }
-        CurrentLevel = level;
-        CurrentLevel.Begin ();
+        CurrentScene = scene;
+        CurrentScene.Begin ();
     }
 }

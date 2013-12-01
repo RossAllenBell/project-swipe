@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class Week : Level {
+public abstract class EnemyWave : Scene {
 
     public const float SpawnCooldown = 1f;
     public const float MaxBaseHealth = 100f;
@@ -56,7 +56,7 @@ public abstract class Week : Level {
         }
 
         if (baseHealth <= 0) {
-            Main.ChangeLevels(new EndScreen());
+            Main.ChangeScenes(new EndScreen());
         }
     }
     

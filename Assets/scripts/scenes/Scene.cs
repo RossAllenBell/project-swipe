@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Level {
+public abstract class Scene {
 	
     public virtual void Begin() {}
 	

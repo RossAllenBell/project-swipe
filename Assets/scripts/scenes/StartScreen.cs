@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StartScreen : Level
+public class StartScreen : Scene
 {
     readonly Rect startGameRect;
     readonly Texture2D startButtonTexture;
@@ -14,7 +14,7 @@ public class StartScreen : Level
     public override void Update ()
     {
         if (Main.Clicked && startGameRect.Contains (Main.TouchScreenLocation)) {
-            Main.ChangeLevels (new Week1());
+            Main.ChangeScenes (new EnemyWave1());
         }
     }
     
