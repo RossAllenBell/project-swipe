@@ -1,4 +1,3 @@
-base mode between waves
 break background into separate sprites
 add currency accumulated through enemy kills
 background parallax

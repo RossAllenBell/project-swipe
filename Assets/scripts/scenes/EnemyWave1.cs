@@ -7,8 +7,6 @@ public class EnemyWave1 : EnemyWave {
     int enemies = 30;
 
     public override void Update() {
-        base.Update();
-        
         if (lastEnemySpawn < Time.time - spawnCooldown && enemies > 0) {
             lastEnemySpawn = Time.time;
             AddSpawnedEnemy((GameObject)Object.Instantiate (Resources.Load ("enemy")));
@@ -16,8 +14,11 @@ public class EnemyWave1 : EnemyWave {
         }
 
         if (enemies == 0 && !EnemiesAlive()) {
-            Main.ChangeScenes(new EnemyWave2());
+            Main.NextWave = 2;
+            Main.ChangeScenes(new StartScreen());
         }
+
+        base.Update();
     }
     
 }

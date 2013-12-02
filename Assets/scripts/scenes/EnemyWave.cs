@@ -48,7 +48,7 @@ public abstract class EnemyWave : Scene {
         }
 
         if (baseHealth <= 0) {
-            Main.ChangeScenes(new EndScreen());
+            Main.ChangeScenes(new StartScreen());
         }
     }
     

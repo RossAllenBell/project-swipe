@@ -23,7 +23,7 @@ public class StartScreen : Scene
 
         if (starting) {
             if (Camera.main.transform.position == Main.BoardCenter) {
-                Main.ChangeScenes (new EnemyWave1());
+                Main.ChangeScenes (WaveLookup.GetWave(Main.NextWave));
             } else {
                 Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, Main.BoardCenter, panSpeed * Time.deltaTime);
             }

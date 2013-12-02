@@ -31,6 +31,8 @@ public class Main : MonoBehaviour
     static Vector2 touchScreenLocation;
     static bool touching;
 
+    public static int NextWave;
+
     void Start ()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -67,6 +69,7 @@ public class Main : MonoBehaviour
         Debug.Log (string.Format ("BOARD_RADIUS: {0}", BoardRadius));
         Debug.Log (string.Format ("BOARD_CENTER: {0}", BoardCenter));
 
+        NextWave = 1;
         ChangeScenes (new StartScreen ());
     }
     
