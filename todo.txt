@@ -1,5 +1,23 @@
+add animation to enemies
 add currency accumulated through enemy kills
-add something to spend money on
+add indicator for attack strength
+add building to upgrade attack
+flying monsters
+monsters that:
+	shields others from damage
+    heals others
+    carries a bomb that will damage monsters and the walls if near
+    catapult that needs time to set up
+    big guy that throws enemies
+    fast guy that goes from corpse to corpse “stealing” gold rewards and can be killed for the collected rewards
 background parallax
 environmental birds
 make further back enemies appear smaller
+make dialogs after/during waves swipe to acknowledge
+enemy health bars
+damage numbers
+add archery range
+add purchasable archer
+make purchased arches assist in waves
+add reinforcement caravan wave
+make archer level up
