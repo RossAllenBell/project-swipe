@@ -1,5 +1,5 @@
-break background into separate sprites
 add currency accumulated through enemy kills
+add something to spend money on
 background parallax
 environmental birds
-max further back enemies appear smaller
+make further back enemies appear smaller

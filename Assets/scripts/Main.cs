@@ -57,7 +57,7 @@ public class Main : MonoBehaviour
         
         Camera.main.transform.position = BaseCenter;
 
-        GameObject.Find ("background").GetComponent<Background> ().Reposition ();
+        Background.Reposition();
 
         Debug.Log (string.Format ("GUI_RATIO: {0}", GuiRatio));
         Debug.Log (string.Format ("GUI_RATIO_WIDTH: {0}", GuiRatioWidth));
