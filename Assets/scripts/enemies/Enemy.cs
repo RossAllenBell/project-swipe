@@ -9,6 +9,7 @@ public abstract class Enemy : MonoBehaviour
     public const float DefaultMaxSpeed = 0.6f;
     public const float DefaultMaxHp = 10f;
     public const float DefaultAttackCooldown = 0.75f;
+	public const int Money = 1;
 
     virtual protected float MinSpeed { get{return DefaultMinSpeed;} }
     virtual protected float MaxSpeed { get{return DefaultMaxSpeed;} }
@@ -45,8 +46,7 @@ public abstract class Enemy : MonoBehaviour
         gameObject.GetComponent<SpriteRenderer> ().color = new Color (1, 1, 1, fade);
 
         if (hp <= 0) {
-            Main.CurrentScene.EnemyDie(gameObject);
-            Destroy (gameObject);
+			Die ();
         }
     }
 
@@ -55,4 +55,11 @@ public abstract class Enemy : MonoBehaviour
         lastHit = Time.time;
         hp -= damage;
     }
+
+	public virtual void Die ()
+	{
+		Main.Money += Money;
+		Main.CurrentScene.EnemyDie(gameObject);
+		Destroy (gameObject);
+	}
 }

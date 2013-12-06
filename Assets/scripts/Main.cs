@@ -32,6 +32,10 @@ public class Main : MonoBehaviour
     static bool touching;
 
     public static int NextWave;
+	public static int Money;
+
+	public static Rect MONEY_RECT;
+	public static GUIStyle MONEY_STYLE;
 
     void Start ()
     {
@@ -44,7 +48,7 @@ public class Main : MonoBehaviour
         GuiRatioHeight = (float)NativeWidth / (float)NormalWidth;
         GuiRatio = Mathf.Min (GuiRatioWidth, GuiRatioHeight);
         
-        //just makes sure the game view width is always 10 units wide
+		//just makes sure the game view width is always 10 units wide
         float newOrthoSize = ((DesiredBoardWidth * NativeHeight) / NativeWidth) / 2f;
         Camera.main.orthographicSize = newOrthoSize;
         
@@ -69,7 +73,14 @@ public class Main : MonoBehaviour
         Debug.Log (string.Format ("BOARD_RADIUS: {0}", BoardRadius));
         Debug.Log (string.Format ("BOARD_CENTER: {0}", BoardCenter));
 
+		MONEY_RECT = new Rect(BoardCenter.x, BoardCenter.y, 500, 500);
+		MONEY_STYLE = new GUIStyle();
+		MONEY_STYLE.fontSize = (int) (40 * GuiRatio);
+		MONEY_STYLE.normal.textColor = Color.red;
+		MONEY_STYLE.alignment = TextAnchor.MiddleCenter;
+
         NextWave = 1;
+		Money = 0;
         ChangeScenes (new StartScreen ());
     }
     
@@ -104,6 +115,7 @@ public class Main : MonoBehaviour
 
     void OnGUI ()
     {
+		GUI.Label(MONEY_RECT, Money.ToString (), MONEY_STYLE);
         CurrentScene.OnGUI ();
     }
 
