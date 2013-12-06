@@ -48,7 +48,7 @@ public class Main : MonoBehaviour
         GuiRatioHeight = (float)NativeWidth / (float)NormalWidth;
         GuiRatio = Mathf.Min (GuiRatioWidth, GuiRatioHeight);
         
-		//just makes sure the game vic Reciew width is always 10 units wide
+		//just makes sure the game view width is always 10 units wide
         float newOrthoSize = ((DesiredBoardWidth * NativeHeight) / NativeWidth) / 2f;
         Camera.main.orthographicSize = newOrthoSize;
         
