@@ -1,15 +1,6 @@
-Project Swipe
+Samurai Fortress Defense
 Castle defenders style game where you hit enemies by swiping them as they run towards your castle
-    names
-		Hinterlands Outpost
-		Last Outpost
-		Final Outpost
-		Last Stand
-		Forward Post
-		Hinterlands synonyms: backwoods, wilds, backcountry
-		Outpost synonyms: frontier, station, settlement
-		Hinterlands Defense
-    themed as wooden palisade fort in the wilderness
+    themed as samurai fortress in the wilderness
     drag finger to increase swipe length, but at a reduced amount of damage, smallswipes do most damage
     fortress additions
         archers
