@@ -5,9 +5,9 @@ public abstract class Enemy : MonoBehaviour
 
     public const float HitFadeDur = 0.1f;
     public const float HitFade = 0.6f;
-    public const float DefaultMinSpeed = 0.4f;
-    public const float DefaultMaxSpeed = 0.6f;
-    public const float DefaultMaxHp = 10f;
+    public const float DefaultMinSpeed = 0.8f;
+    public const float DefaultMaxSpeed = 1.0f;
+    public const float DefaultMaxHp = 4f;
     public const float DefaultAttackCooldown = 0.75f;
 	public const int Money = 1;
 
@@ -24,6 +24,7 @@ public abstract class Enemy : MonoBehaviour
     
     public virtual void Start ()
     {
+		gameObject.tag = "Enemy";
         transform.position = new Vector2 (-0.5f, (Random.value * Main.BoardHeight * 0.66f) + 0.5f);
         destination = new Vector2 (Main.BoardWidth - 1, transform.position.y);
         speed = (Random.value * (MaxSpeed - MinSpeed)) + MinSpeed;
@@ -43,7 +44,9 @@ public abstract class Enemy : MonoBehaviour
         }
 
         float fade = 1 - (HitFade * Mathf.Max (0, 1 - ((Time.time - lastHit) / HitFadeDur)));
-        gameObject.GetComponent<SpriteRenderer> ().color = new Color (1, 1, 1, fade);
+		foreach(SpriteRenderer sr in gameObject.GetComponentsInChildren<SpriteRenderer>()) {
+			sr.color = new Color (1, 1, 1, fade);
+		}
 
         if (hp <= 0) {
 			Die ();

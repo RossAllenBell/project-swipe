@@ -1,4 +1,3 @@
-add animation to enemies
 add currency accumulated through enemy kills
 add indicator for attack strength
 add building to upgrade attack

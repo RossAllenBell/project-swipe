@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5f1f9385111449c4880bd9af982fe68b
+guid: cf90727cf59f21c419b641d86f3d4b8f
 TextureImporter:
   serializedVersion: 2
   mipmaps:
@@ -38,53 +38,57 @@ TextureImporter:
   spritePixelsToUnits: 500
   alphaIsTransparency: 1
   textureType: 8
-  buildTargetSettings: []
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
   spriteSheet:
     sprites:
-    - name: puck_body
+    - name: body
       rect:
         serializedVersion: 2
-        x: 13
-        y: 146
-        width: 257
-        height: 344
+        x: 71
+        y: 185
+        width: 119
+        height: 282
       alignment: 0
       pivot: {x: .5, y: .5}
-    - name: puck_left_arm
+    - name: arm
       rect:
         serializedVersion: 2
-        x: 323
-        y: 320
-        width: 141
-        height: 146
-      alignment: 1
-      pivot: {x: 0, y: 1}
-    - name: puck_left_leg
+        x: 263
+        y: 283
+        width: 92
+        height: 119
+      alignment: 9
+      pivot: {x: .124100067, y: .106268361}
+    - name: left_leg
       rect:
         serializedVersion: 2
-        x: 586
-        y: 350
-        width: 96
-        height: 141
-      alignment: 1
-      pivot: {x: 0, y: 1}
-    - name: puck_right_arm
+        x: 38
+        y: 16
+        width: 49
+        height: 129
+      alignment: 9
+      pivot: {x: .340632141, y: .88915354}
+    - name: right_leg
       rect:
         serializedVersion: 2
-        x: 305
-        y: 58
-        width: 156
-        height: 147
-      alignment: 1
-      pivot: {x: 0, y: 1}
-    - name: puck_right_leg
+        x: 129
+        y: 15
+        width: 52
+        height: 132
+      alignment: 9
+      pivot: {x: .371279776, y: .880309224}
+    - name: torch
       rect:
         serializedVersion: 2
-        x: 545
-        y: 57
-        width: 126
-        height: 123
-      alignment: 1
-      pivot: {x: 0, y: 1}
+        x: 270
+        y: 95
+        width: 52
+        height: 93
+      alignment: 9
+      pivot: {x: .285466701, y: .140137866}
   spritePackingTag: 
   userData: 

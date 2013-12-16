@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FaceMan : Enemy
+public class Kobold : Enemy
 {
     
 }

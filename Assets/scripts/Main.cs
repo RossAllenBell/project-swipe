@@ -18,7 +18,7 @@ public class Main : MonoBehaviour
     public static Vector3 BaseCenter;
     public const float BasicallyZero = 0.0001f;
     public static Scene CurrentScene;
-    public const float StartingBaseHealth = 100f;
+    public static float StartingBaseHealth = 100f;
 
     public static bool Clicked { get { return click; } }
 

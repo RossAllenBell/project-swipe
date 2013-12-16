@@ -3,13 +3,13 @@ using UnityEngine;
 public class EnemyWave1 : EnemyWave {
     
     float spawnCooldown = 1f;
-    float lastEnemySpawn = -10f;
+    float lastKoboldSpawn = -10f;
     int enemies = 30;
 
     public override void Update() {
-        if (lastEnemySpawn < Time.time - spawnCooldown && enemies > 0) {
-            lastEnemySpawn = Time.time;
-            AddSpawnedEnemy((GameObject)Object.Instantiate (Resources.Load ("enemy")));
+        if (lastKoboldSpawn < Time.time - spawnCooldown && enemies > 0) {
+            lastKoboldSpawn = Time.time;
+            AddSpawnedEnemy((GameObject)Object.Instantiate (Resources.Load ("kobold")));
             enemies--;
         }
 
