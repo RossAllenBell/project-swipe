@@ -7,7 +7,7 @@ public abstract class Enemy : MonoBehaviour
     public const float HitFade = 0.6f;
     public const float DefaultMinSpeed = 0.8f;
     public const float DefaultMaxSpeed = 1.0f;
-    public const float DefaultMaxHp = 4f;
+    public const float DefaultMaxHp = 400f;
     public const float DefaultAttackCooldown = 0.75f;
 	public const int Money = 1;
 

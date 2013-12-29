@@ -18,7 +18,7 @@ public class Main : MonoBehaviour
     public static Vector3 BaseCenter;
     public const float BasicallyZero = 0.0001f;
     public static Scene CurrentScene;
-    public static float StartingBaseHealth = 100f;
+    public static float StartingBaseHealth = 10000f;
 
     public static bool Clicked { get { return click; } }
 
@@ -34,8 +34,8 @@ public class Main : MonoBehaviour
     public static int NextWave;
 	public static int Money;
 
-	public static Rect MONEY_RECT;
-	public static GUIStyle MONEY_STYLE;
+	public static Rect MoneyRect;
+	public static GUIStyle MoneyStyle;
 
     void Start ()
     {
@@ -73,11 +73,11 @@ public class Main : MonoBehaviour
         Debug.Log (string.Format ("BOARD_RADIUS: {0}", BoardRadius));
         Debug.Log (string.Format ("BOARD_CENTER: {0}", BoardCenter));
 
-		MONEY_RECT = new Rect(BoardCenter.x, BoardCenter.y, 500, 500);
-		MONEY_STYLE = new GUIStyle();
-		MONEY_STYLE.fontSize = (int) (40 * GuiRatio);
-		MONEY_STYLE.normal.textColor = Color.red;
-		MONEY_STYLE.alignment = TextAnchor.MiddleCenter;
+		MoneyRect = new Rect(BoardCenter.x, BoardCenter.y, 500, 500);
+		MoneyStyle = new GUIStyle();
+		MoneyStyle.fontSize = (int) (40 * GuiRatio);
+		MoneyStyle.normal.textColor = Color.red;
+		MoneyStyle.alignment = TextAnchor.MiddleCenter;
 
         NextWave = 1;
 		Money = 0;
@@ -115,7 +115,7 @@ public class Main : MonoBehaviour
 
     void OnGUI ()
     {
-		GUI.Label(MONEY_RECT, Money.ToString (), MONEY_STYLE);
+		GUI.Label(MoneyRect, Money.ToString (), MoneyStyle);
         CurrentScene.OnGUI ();
     }
 
@@ -125,7 +125,7 @@ public class Main : MonoBehaviour
 
     public static float GetBaseDamage ()
     {
-        return 1;
+        return 100f;
     }
 
     public static float GetDamageRatioForLength (float length)
@@ -133,10 +133,15 @@ public class Main : MonoBehaviour
         return 1f - (1f * (length / BoardWidth));
     }
 
-    public static Vector2 ScreenLocationToBoardLocation (Vector2 inputLocation)
-    {
-        return new Vector2 (BoardWidth * (inputLocation.x / NativeWidth), BoardHeight * (inputLocation.y / NativeHeight));
-    }
+	public static Vector2 ScreenLocationToBoardLocation (Vector2 screenLocation)
+	{
+		return new Vector2 (BoardWidth * (screenLocation.x / NativeWidth), BoardHeight * (screenLocation.y / NativeHeight));
+	}
+
+	public static Vector2 BoardLocationToScreenLocation (Vector2 boardLocation)
+	{
+		return new Vector2 (NativeWidth * (boardLocation.x / BoardWidth), NativeHeight - (NativeHeight * (boardLocation.y / BoardHeight)));
+	}
 
     public static void ChangeScenes (Scene scene)
     {

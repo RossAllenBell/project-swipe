@@ -6,10 +6,15 @@ public abstract class EnemyWave : Scene {
     public static Vector2 HealthBarSize = new Vector2(0.8f * Main.NativeWidth, 0.05f * Main.NativeHeight);
     public static Vector2 HealthBarPadding = new Vector2((Main.NativeWidth - HealthBarSize.x) / 2, HealthBarSize.y);
 
+	public const float SwipeDamageDuration = 1f;
+
     Vector2 lastSwipeStart;
     Vector2 lastSwipeEnd;
     bool wasTouching;
     Swipe currentSwipe;
+
+	List<SwipeDamage> swipes;
+	public static GUIStyle SwipeDamageStyle;
 
     Texture2D healthBarTexture;
     GUIStyle healthBarStyle;
@@ -24,6 +29,12 @@ public abstract class EnemyWave : Scene {
 
         wasTouching = false;
         currentSwipe = null;
+
+		swipes = new List<SwipeDamage> ();
+		SwipeDamageStyle = new GUIStyle();
+		SwipeDamageStyle.fontSize = (int) (100 * Main.GuiRatio);
+		SwipeDamageStyle.normal.textColor = Color.red;
+		SwipeDamageStyle.alignment = TextAnchor.UpperLeft;
 
         enemies = new List<GameObject>();
         baseHealth = Main.StartingBaseHealth;
@@ -55,6 +66,16 @@ public abstract class EnemyWave : Scene {
     public override void OnGUI()
     {
         GUI.Box(new Rect(HealthBarPadding.x, HealthBarPadding.y, HealthBarSize.x * (baseHealth / Main.StartingBaseHealth), HealthBarSize.y), GUIContent.none, healthBarStyle);
+
+		for (int i = swipes.Count - 1; i >= 0; i--)
+		{
+			SwipeDamage swipe = swipes[i];
+			if (swipe.startTime + SwipeDamageDuration < Time.time) {
+				swipes.RemoveAt(i);
+			} else {
+				GUI.Label(new Rect(swipe.x, swipe.y, 100, 100), swipe.damage, SwipeDamageStyle);
+			}
+		}
     }
     
     public override void End() {
@@ -74,11 +95,13 @@ public abstract class EnemyWave : Scene {
                 hitGameObject.GetComponent<Enemy> ().Hit (damage);
             }
         }
+		Vector2 middlePoint = Main.BoardLocationToScreenLocation((start + end) / 2f);
+		swipes.Add(new SwipeDamage(Time.time, middlePoint.x, middlePoint.y, damage));
     }
 
     public override void EnemyAttack(Enemy enemy)
     {
-        baseHealth = Mathf.Max(0, baseHealth - 1);
+        baseHealth = Mathf.Max(0, baseHealth - 100);
     }
 
     public override void EnemyDie(GameObject enemy)
