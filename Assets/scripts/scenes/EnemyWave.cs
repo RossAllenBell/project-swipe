@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 public abstract class EnemyWave : Scene {
 
-    public static Vector2 HealthBarSize = new Vector2(0.8f * Main.NativeWidth, 0.05f * Main.NativeHeight);
-    public static Vector2 HealthBarPadding = new Vector2((Main.NativeWidth - HealthBarSize.x) / 2, HealthBarSize.y);
-
 	public const float SwipeDamageDuration = 1f;
 
     Vector2 lastSwipeStart;
@@ -32,7 +29,7 @@ public abstract class EnemyWave : Scene {
 
 		swipes = new List<SwipeDamage> ();
 		SwipeDamageStyle = new GUIStyle();
-		SwipeDamageStyle.fontSize = (int) (100 * Main.GuiRatio);
+		SwipeDamageStyle.fontSize = Main.FontLarge;
 		SwipeDamageStyle.normal.textColor = Color.red;
 		SwipeDamageStyle.alignment = TextAnchor.UpperLeft;
 
@@ -65,7 +62,7 @@ public abstract class EnemyWave : Scene {
     
     public override void OnGUI()
     {
-        GUI.Box(new Rect(HealthBarPadding.x, HealthBarPadding.y, HealthBarSize.x * (baseHealth / Main.StartingBaseHealth), HealthBarSize.y), GUIContent.none, healthBarStyle);
+		GUI.Box(new Rect(Main.HealthBarPadding.x, Main.HealthBarPadding.y, Main.HealthBarSize.x * (baseHealth / Main.StartingBaseHealth), Main.HealthBarSize.y), GUIContent.none, healthBarStyle);
 
 		for (int i = swipes.Count - 1; i >= 0; i--)
 		{
@@ -73,7 +70,7 @@ public abstract class EnemyWave : Scene {
 			if (swipe.startTime + SwipeDamageDuration < Time.time) {
 				swipes.RemoveAt(i);
 			} else {
-				GUI.Label(new Rect(swipe.x, swipe.y, 100, 100), swipe.damage, SwipeDamageStyle);
+				GUI.Label(new Rect(swipe.x, swipe.y, 1, 1), swipe.damage, SwipeDamageStyle);
 			}
 		}
     }
@@ -95,7 +92,7 @@ public abstract class EnemyWave : Scene {
                 hitGameObject.GetComponent<Enemy> ().Hit (damage);
             }
         }
-		Vector2 middlePoint = Main.BoardLocationToScreenLocation((start + end) / 2f);
+		Vector2 middlePoint = Main.BoardLocationToGuiLocation((start + end) / 2f);
 		swipes.Add(new SwipeDamage(Time.time, middlePoint.x, middlePoint.y, damage));
     }
 

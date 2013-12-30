@@ -1,4 +1,3 @@
-add currency accumulated through enemy kills
 add building to upgrade attack
 flying monsters
 monsters that:
@@ -20,4 +19,4 @@ make purchased arches assist in waves
 add reinforcement caravan wave
 make archer level up
 
-change attacks to feed from an attack meter that slowly recharges, long swipes only advantageous when placed well
+change attacks to feed from an attack meter that slowly recharges, taps drain smaller portions of the meter than longer swipes

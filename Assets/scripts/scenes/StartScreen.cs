@@ -3,29 +3,32 @@ using UnityEngine;
 public class StartScreen : Scene
 {
     readonly Rect startGameRect;
-    readonly Texture2D startButtonTexture;
+	readonly GUIStyle startGameStyle;
     readonly float panSpeed;
 
     bool starting = false;
 
     public StartScreen ()
     {
-        startGameRect = new Rect (Main.NativeWidth / 3, Main.NativeHeight / 3, Main.NativeWidth / 3, Main.NativeHeight / 3);
-        startButtonTexture = Resources.Load ("media/ui/start-button") as Texture2D;
+        startGameRect = new Rect (0, 0, Main.NativeWidth / 5, Main.NativeHeight / 5);
+		startGameStyle = new GUIStyle();
+		startGameStyle.fontSize = Main.FontLargest;
+		startGameStyle.normal.textColor = Color.black;
+		startGameStyle.alignment = TextAnchor.MiddleCenter;
         panSpeed = 4.0f;
     }
     
     public override void Update ()
     {
-        if (!starting && Main.Clicked && startGameRect.Contains (Main.TouchScreenLocation)) {
+        if (!starting && Main.Clicked && startGameRect.Contains (Main.TouchGuiLocation)) {
             starting = true;
         }
 
         if (starting) {
-            if (Camera.main.transform.position == Main.BoardCenter) {
+            if (Camera.main.transform.position == Main.WaveCenter) {
                 Main.ChangeScenes (WaveLookup.GetWave(Main.NextWave));
             } else {
-                Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, Main.BoardCenter, panSpeed * Time.deltaTime);
+                Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, Main.WaveCenter, panSpeed * Time.deltaTime);
             }
         } else if(Camera.main.transform.position != Main.BaseCenter) {
             Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, Main.BaseCenter, panSpeed * Time.deltaTime);
@@ -35,7 +38,7 @@ public class StartScreen : Scene
     public override void OnGUI ()
     {
         if (!starting) {
-            GUI.DrawTexture (startGameRect, startButtonTexture);
+			GUI.Label(startGameRect, "Start", startGameStyle);
         }
     }
     

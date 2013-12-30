@@ -25,7 +25,7 @@ public abstract class Enemy : MonoBehaviour
     public virtual void Start ()
     {
 		gameObject.tag = "Enemy";
-        transform.position = new Vector2 (-0.5f, (Random.value * Main.BoardHeight * 0.66f) + 0.5f);
+        transform.position = new Vector2 (-0.5f, (Random.value * Main.VisibleBoardHeight * 0.66f) + 0.5f);
         destination = new Vector2 (Main.BoardWidth - 1, transform.position.y);
         speed = (Random.value * (MaxSpeed - MinSpeed)) + MinSpeed;
 

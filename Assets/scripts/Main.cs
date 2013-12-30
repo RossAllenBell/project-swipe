@@ -5,31 +5,37 @@ public class Main : MonoBehaviour
 
     public const int NormalWidth = 1920;
     public const int NormalHeight = 1080;
-    public const float DesiredBoardWidth = 10f;
+    public const float BoardWidth = 10f;
     public static float GuiRatio;
     public static float GuiRatioWidth;
     public static float GuiRatioHeight;
     public static int NativeWidth;
     public static int NativeHeight;
-    public static float BoardWidth;
-    public static float BoardHeight;
-    public static float BoardRadius;
-    public static Vector3 BoardCenter;
+    public static float VisibleBoardHeight;
+    public static Vector3 WaveCenter;
     public static Vector3 BaseCenter;
     public const float BasicallyZero = 0.0001f;
     public static Scene CurrentScene;
     public static float StartingBaseHealth = 10000f;
 
+	public static int FontLargest = 150;
+	public static int FontLarge = 100;
+
     public static bool Clicked { get { return click; } }
 
-    public static Vector2 TouchScreenLocation { get { return touchScreenLocation; } }
-    public static Vector2 TouchBoardLocation { get { return ScreenLocationToBoardLocation(touchScreenLocation); } }
+	public static Vector2 TouchLocation { get { return touchLocation; } }
+	public static Vector2 TouchGuiLocation { get { return TouchLocationToGuiLocation(touchLocation); } }
+    public static Vector2 TouchBoardLocation { get { return TouchLocationToBoardLocation(touchLocation); } }
+	public static float CameraX { get { return Camera.main.transform.position.x - (BoardWidth / 2); } }
 
     public static bool Touching { get { return touching; } }
 
     static bool click;
-    static Vector2 touchScreenLocation;
+    static Vector2 touchLocation;
     static bool touching;
+
+	public static Vector2 HealthBarSize = new Vector2(0.8f * Main.NativeWidth, 0.05f * Main.NativeHeight);
+	public static Vector2 HealthBarPadding = new Vector2((Main.NativeWidth - HealthBarSize.x) / 2, HealthBarSize.y);
 
     public static int NextWave;
 	public static int Money;
@@ -47,37 +53,31 @@ public class Main : MonoBehaviour
         GuiRatioWidth = (float)NativeWidth / (float)NormalWidth;
         GuiRatioHeight = (float)NativeWidth / (float)NormalWidth;
         GuiRatio = Mathf.Min (GuiRatioWidth, GuiRatioHeight);
+
+		FontLargest = (int) (FontLargest * GuiRatio);
+		FontLarge = (int) (FontLarge * GuiRatio);
         
 		//just makes sure the game view width is always 10 units wide
-        float newOrthoSize = ((DesiredBoardWidth * NativeHeight) / NativeWidth) / 2f;
+        float newOrthoSize = ((BoardWidth * NativeHeight) / NativeWidth) / 2f;
         Camera.main.orthographicSize = newOrthoSize;
         
-        BoardHeight = 2f * Camera.main.orthographicSize;
-        BoardWidth = BoardHeight * Camera.main.aspect;
+        VisibleBoardHeight = 2f * Camera.main.orthographicSize;
         
-        BoardRadius = (Mathf.Sqrt (Mathf.Pow (BoardWidth, 2) + Mathf.Pow (BoardHeight, 2))) / 2f;
-        BoardCenter = new Vector3 (BoardWidth / 2f, BoardHeight / 2f, Camera.main.transform.position.z);
-        BaseCenter = new Vector3 (BoardWidth * 1.5f, BoardHeight / 2f, Camera.main.transform.position.z);
+        WaveCenter = new Vector3 (BoardWidth / 2f, VisibleBoardHeight / 2f, Camera.main.transform.position.z);
+		BaseCenter = new Vector3 (BoardWidth * 1.5f, VisibleBoardHeight / 2f, Camera.main.transform.position.z);
         
         Camera.main.transform.position = BaseCenter;
 
         Background.Reposition();
 
-        Debug.Log (string.Format ("GUI_RATIO: {0}", GuiRatio));
-        Debug.Log (string.Format ("GUI_RATIO_WIDTH: {0}", GuiRatioWidth));
-        Debug.Log (string.Format ("GUI_RATIO_HEIGHT: {0}", GuiRatioHeight));
-        Debug.Log (string.Format ("NATIVE_WIDTH: {0}", NativeWidth));
-        Debug.Log (string.Format ("NATIVE_HEIGHT: {0}", NativeHeight));
-        Debug.Log (string.Format ("BOARD_WIDTH: {0}", BoardWidth));
-        Debug.Log (string.Format ("BOARD_HEIGHT: {0}", BoardHeight));
-        Debug.Log (string.Format ("BOARD_RADIUS: {0}", BoardRadius));
-        Debug.Log (string.Format ("BOARD_CENTER: {0}", BoardCenter));
+		HealthBarSize = new Vector2(0.8f * NativeWidth, 0.05f * NativeHeight);
+		HealthBarPadding = new Vector2((NativeWidth - HealthBarSize.x) / 2, HealthBarSize.y);
 
-		MoneyRect = new Rect(BoardCenter.x, BoardCenter.y, 500, 500);
+		MoneyRect = new Rect(HealthBarPadding.x + HealthBarSize.x + (50 * GuiRatio), HealthBarPadding.y, 1, 1);
 		MoneyStyle = new GUIStyle();
-		MoneyStyle.fontSize = (int) (40 * GuiRatio);
-		MoneyStyle.normal.textColor = Color.red;
-		MoneyStyle.alignment = TextAnchor.MiddleCenter;
+		MoneyStyle.fontSize = Main.FontLarge;
+		MoneyStyle.normal.textColor = Color.yellow;
+		MoneyStyle.alignment = TextAnchor.UpperLeft;
 
         NextWave = 1;
 		Money = 0;
@@ -102,7 +102,7 @@ public class Main : MonoBehaviour
 
         if (Input.touchCount > 0 | Input.GetMouseButton (0)) {
             Vector2 tempLocation = Input.touchCount > 0 ? Input.GetTouch (0).position : (Vector2)Input.mousePosition;
-            touchScreenLocation = new Vector2 (tempLocation.x, tempLocation.y);
+            touchLocation = new Vector2 (tempLocation.x, tempLocation.y);
             click = !touching;
             touching = true;
         } else {
@@ -133,14 +133,19 @@ public class Main : MonoBehaviour
         return 1f - (1f * (length / BoardWidth));
     }
 
-	public static Vector2 ScreenLocationToBoardLocation (Vector2 screenLocation)
+	public static Vector2 TouchLocationToGuiLocation (Vector2 touchLocation)
 	{
-		return new Vector2 (BoardWidth * (screenLocation.x / NativeWidth), BoardHeight * (screenLocation.y / NativeHeight));
+		return new Vector2 (touchLocation.x, NativeHeight - touchLocation.y);
 	}
 
-	public static Vector2 BoardLocationToScreenLocation (Vector2 boardLocation)
+	public static Vector2 TouchLocationToBoardLocation (Vector2 touchLocation)
 	{
-		return new Vector2 (NativeWidth * (boardLocation.x / BoardWidth), NativeHeight - (NativeHeight * (boardLocation.y / BoardHeight)));
+		return new Vector2 ((BoardWidth * (touchLocation.x / NativeWidth)) + Main.CameraX, VisibleBoardHeight * (touchLocation.y / NativeHeight));
+	}
+
+	public static Vector2 BoardLocationToGuiLocation (Vector2 boardLocation)
+	{
+		return new Vector2 (NativeWidth * ((boardLocation.x - Main.CameraX) / BoardWidth), NativeHeight - (NativeHeight * (boardLocation.y / VisibleBoardHeight)));
 	}
 
     public static void ChangeScenes (Scene scene)
