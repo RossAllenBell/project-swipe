@@ -30,7 +30,6 @@ public abstract class EnemyWave : Scene {
 		swipes = new List<SwipeDamage> ();
 		SwipeDamageStyle = new GUIStyle();
 		SwipeDamageStyle.fontSize = Main.FontLarge;
-		SwipeDamageStyle.normal.textColor = Color.red;
 		SwipeDamageStyle.alignment = TextAnchor.UpperLeft;
 
         enemies = new List<GameObject>();
@@ -67,10 +66,11 @@ public abstract class EnemyWave : Scene {
 		for (int i = swipes.Count - 1; i >= 0; i--)
 		{
 			SwipeDamage swipe = swipes[i];
-			if (swipe.startTime + SwipeDamageDuration < Time.time) {
+			if (swipe.StartTime + SwipeDamageDuration < Time.time) {
 				swipes.RemoveAt(i);
 			} else {
-				GUI.Label(new Rect(swipe.x, swipe.y, 1, 1), swipe.damage, SwipeDamageStyle);
+				SwipeDamageStyle.normal.textColor = new Color(1.0f, 0f, 0f, (SwipeDamageDuration - (Time.time - swipe.StartTime)) / SwipeDamageDuration);
+				GUI.Label(new Rect(swipe.X, swipe.Y, 1, 1), swipe.Damage, SwipeDamageStyle);
 			}
 		}
     }

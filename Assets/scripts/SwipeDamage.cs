@@ -1,13 +1,13 @@
 public struct SwipeDamage
 {
-	public float startTime, x, y;
-	public string damage;
+	public float StartTime, X, Y;
+	public string Damage;
 
 	public SwipeDamage(float startTime, float x, float y, float damage) 
 	{
-		this.startTime = startTime;
-		this.x = x;
-		this.y = y;
-		this.damage = ((int) damage).ToString();
+		this.StartTime = startTime;
+		this.X = x;
+		this.Y = y;
+		this.Damage = ((int) damage).ToString();
 	}
 }
