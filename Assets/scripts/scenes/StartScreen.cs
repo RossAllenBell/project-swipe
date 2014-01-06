@@ -20,7 +20,7 @@ public class StartScreen : Scene
     
     public override void Update ()
     {
-        if (!starting && Main.Clicked && startGameRect.Contains (Main.TouchGuiLocation)) {
+        if (!starting && Main.CurrentUI == null && Main.Clicked && startGameRect.Contains (Main.TouchGuiLocation)) {
             starting = true;
         }
 
@@ -30,8 +30,10 @@ public class StartScreen : Scene
             } else {
                 Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, Main.WaveCenter, panSpeed * Time.deltaTime);
             }
-        } else if(Camera.main.transform.position != Main.BaseCenter) {
-            Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, Main.BaseCenter, panSpeed * Time.deltaTime);
+        } else {
+			if(Camera.main.transform.position != Main.BaseCenter) {
+            	Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, Main.BaseCenter, panSpeed * Time.deltaTime);
+			}
         }
     }
     
@@ -39,6 +41,10 @@ public class StartScreen : Scene
     {
         if (!starting) {
 			GUI.Label(startGameRect, "Start", startGameStyle);
+			
+			if (Main.CurrentUI != null) {
+				Main.CurrentUI.OnGUI();
+			}
         }
     }
     

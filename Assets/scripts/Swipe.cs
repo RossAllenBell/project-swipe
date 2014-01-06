@@ -3,8 +3,11 @@
 public class Swipe : MonoBehaviour
 {
 
+	public const string SwipeTag = "Swipe";
+
     void Start ()
     {
+		gameObject.tag = SwipeTag;
         transform.localScale = new Vector2 (0f, 1f);
     }
     

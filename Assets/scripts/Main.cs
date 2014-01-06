@@ -43,6 +43,9 @@ public class Main : MonoBehaviour
 	public static Rect MoneyRect;
 	public static GUIStyle MoneyStyle;
 
+	static UI currentUI;
+	public static UI CurrentUI { get { return currentUI; } }
+
     void Start ()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -88,7 +91,11 @@ public class Main : MonoBehaviour
     {
         if (Input.GetKeyUp (KeyCode.Escape)) {
             if (CurrentScene is StartScreen) {
-                Application.Quit ();
+				if (currentUI != null) {
+					currentUI = null;
+				} else {
+                	Application.Quit ();
+				}
             } else {
                 ChangeScenes (new StartScreen ());
             }
@@ -156,4 +163,16 @@ public class Main : MonoBehaviour
         CurrentScene = scene;
         CurrentScene.Begin ();
     }
+
+	public static void SetCurrentUI (UI ui)
+	{
+		if (currentUI == null) {
+			currentUI = ui;
+		}
+	}
+
+	public static void ClearCurrentUI ()
+	{
+		currentUI = null;
+	}
 }

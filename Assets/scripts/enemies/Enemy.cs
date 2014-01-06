@@ -3,6 +3,7 @@
 public abstract class Enemy : MonoBehaviour
 {
 
+	public const string EnemyTag = "Enemy";
     public const float HitFadeDur = 0.1f;
     public const float HitFade = 0.6f;
     public const float DefaultMinSpeed = 0.8f;
@@ -24,7 +25,7 @@ public abstract class Enemy : MonoBehaviour
     
     public virtual void Start ()
     {
-		gameObject.tag = "Enemy";
+		gameObject.tag = EnemyTag;
         transform.position = new Vector2 (-0.5f, (Random.value * Main.VisibleBoardHeight * 0.66f) + 0.5f);
         destination = new Vector2 (Main.BoardWidth - 1, transform.position.y);
         speed = (Random.value * (MaxSpeed - MinSpeed)) + MinSpeed;

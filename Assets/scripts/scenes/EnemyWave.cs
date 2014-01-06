@@ -88,7 +88,7 @@ public abstract class EnemyWave : Scene {
         float damage = Main.GetBaseDamage () * Main.GetDamageRatioForLength (Vector2.Distance (start, end));
         foreach (RaycastHit2D hitObject in hitObjects) {
             GameObject hitGameObject = hitObject.collider.gameObject;
-            if (hitGameObject.tag == "Enemy") {
+            if (hitGameObject.tag == Enemy.EnemyTag) {
                 hitGameObject.GetComponent<Enemy> ().Hit (damage);
             }
         }
