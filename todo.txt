@@ -12,7 +12,6 @@ environmental birds
 make further back enemies appear smaller
 make dialogs after/during waves swipe to acknowledge
 enemy health bars
-damage numbers
 add archery range
 add purchasable archer
 make purchased arches assist in waves

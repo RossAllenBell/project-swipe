@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class Main : MonoBehaviour
 {
@@ -46,6 +47,9 @@ public class Main : MonoBehaviour
 	static UI currentUI;
 	public static UI CurrentUI { get { return currentUI; } }
 
+    public static Weapon CurrentWeapon;
+    public static List<Weapon> PurchasedWeapons;
+
     void Start ()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -85,6 +89,10 @@ public class Main : MonoBehaviour
         NextWave = 1;
 		Money = 0;
         ChangeScenes (new StartScreen ());
+
+        CurrentWeapon = Weapon.Weapons[0];
+        PurchasedWeapons = new List<Weapon>();
+        PurchasedWeapons.Add(CurrentWeapon);
     }
     
     void Update ()
@@ -132,12 +140,12 @@ public class Main : MonoBehaviour
 
     public static float GetBaseDamage ()
     {
-        return 100f;
+        return CurrentWeapon.Damage;
     }
 
     public static float GetDamageRatioForLength (float length)
     {
-        return 1f - (1f * (length / BoardWidth));
+        return 1f - ((1f - CurrentWeapon.LengthMitigation) * (length / BoardWidth));
     }
 
 	public static Vector2 TouchLocationToGuiLocation (Vector2 touchLocation)

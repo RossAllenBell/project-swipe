@@ -42,6 +42,8 @@ Castle defenders style game where you hit enemies by swiping them as they run to
         runs fast
         big guy that throws enemies
         fast guy that goes from corpse to corpse “stealing” gold rewards and can be killed for the collected rewards
+    level up with weapons used, giving more damage or special abilities
+    you can replay previous waves but the rewards start at 50% and scale down to 5%
     some mechanic to send waves of monsters to friends’ fortresses
     website
     tutorial-like help
