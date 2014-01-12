@@ -98,12 +98,8 @@ public class Main : MonoBehaviour
     void Update ()
     {
         if (Input.GetKeyUp (KeyCode.Escape)) {
-            if (CurrentScene is StartScreen) {
-				if (currentUI != null) {
-					currentUI = null;
-				} else {
-                	Application.Quit ();
-				}
+            if (CurrentScene is StartScreen && currentUI == null) {
+               	Application.Quit ();
             } else {
                 ChangeScenes (new StartScreen ());
             }
@@ -130,7 +126,10 @@ public class Main : MonoBehaviour
 
     void OnGUI ()
     {
-		GUI.Label(MoneyRect, Money.ToString (), MoneyStyle);
+        if(CurrentUI == null) {
+            GUI.Label(MoneyRect, Money.ToString (), MoneyStyle);
+        }
+
         CurrentScene.OnGUI ();
     }
 

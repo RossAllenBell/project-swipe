@@ -3,14 +3,16 @@ using UnityEngine;
 public abstract class UI
 {
 
-	protected static Rect OkRect { get { return new Rect(Main.NativeWidth - (Main.NativeWidth / 10), 0, (Main.NativeWidth / 10), (Main.NativeHeight / 10)); } }
-	protected static string OkText = "OK";
+	protected static Texture2D BackTexture = Resources.Load("media/ui/back") as Texture2D;
+	protected static Rect BackRect { get { return new Rect(0, Main.NativeHeight - (Main.NativeWidth / 5), (Main.NativeWidth / 5), (Main.NativeWidth / 5)); } }
 
 	public virtual void OnGUI()
 	{
 		GUI.Box (new Rect (0,0,Main.NativeWidth,Main.NativeHeight), "");
-		if (GUI.Button(OkRect, OkText)) {
-			Main.ClearCurrentUI();
-		}
+		GUI.DrawTexture(BackRect, BackTexture);
+
+		if (Main.Clicked && BackRect.Contains(Main.TouchGuiLocation)) {
+            Main.ClearCurrentUI();
+        }
 	}
 }

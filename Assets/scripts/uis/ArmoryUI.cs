@@ -4,12 +4,18 @@ using System.Collections.Generic;
 public class ArmoryUI : UI
 {
 
-	int selectedWeapon;
+	protected static Texture2D DaggerTexture = Resources.Load("media/ui/dagger") as Texture2D;
+	protected static Rect DaggerRect { get { return new Rect((Main.NativeWidth / 5) * 2, (Main.NativeHeight / 5) * 0, Main.NativeWidth / 5, Main.NativeWidth / 10); } }
+
+	protected static Texture2D ShortSwordTexture = Resources.Load("media/ui/short-sword") as Texture2D;
+	protected static Rect ShortSwordRect { get { return new Rect((Main.NativeWidth / 5) * 2, (Main.NativeHeight / 5) * 1, Main.NativeWidth / 5, Main.NativeWidth / 10); } }
+
+	// int selectedWeapon;
 	string[] weaponNames;
 
 	public ArmoryUI ()
 	{
-		selectedWeapon = Weapon.Weapons.IndexOf(Main.CurrentWeapon);
+		// selectedWeapon = Weapon.Weapons.IndexOf(Main.CurrentWeapon);
 		weaponNames = new string[Weapon.Weapons.Count];
 		for(int i=0; i < Weapon.Weapons.Count; i++)
 		{
@@ -21,7 +27,18 @@ public class ArmoryUI : UI
 	{
 		base.OnGUI();
 
-		selectedWeapon = GUILayout.SelectionGrid(selectedWeapon, weaponNames, 1);
-		Main.CurrentWeapon = Weapon.Weapons[selectedWeapon];
+		GUI.DrawTexture(DaggerRect, DaggerTexture);
+		if (Main.Clicked && DaggerRect.Contains(Main.TouchGuiLocation)) {
+            Main.CurrentWeapon = Weapon.Weapons[0];
+        } else if (Main.CurrentWeapon !=  Weapon.Weapons[0]) {
+        	GUI.Box (DaggerRect, "");
+		}
+
+        GUI.DrawTexture(ShortSwordRect, ShortSwordTexture);
+		if (Main.Clicked && ShortSwordRect.Contains(Main.TouchGuiLocation)) {
+            Main.CurrentWeapon =  Weapon.Weapons[1];
+        } else if (Main.CurrentWeapon !=  Weapon.Weapons[1]) {
+        	GUI.Box (ShortSwordRect, "");
+		}
 	}
 }

@@ -40,11 +40,11 @@ public class StartScreen : Scene
     public override void OnGUI ()
     {
         if (!starting) {
-			GUI.Label(startGameRect, "Start", startGameStyle);
-			
 			if (Main.CurrentUI != null) {
 				Main.CurrentUI.OnGUI();
-			}
+			} else {
+                GUI.Label(startGameRect, "Start", startGameStyle);
+            }
         }
     }
     
