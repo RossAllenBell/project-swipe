@@ -111,6 +111,10 @@ public class Main : MonoBehaviour
             Time.timeScale = 1.0f;
         }
 
+        if (Input.GetKey (KeyCode.G)) {
+            Main.Money += 50;
+        }
+
         if (Input.touchCount > 0 | Input.GetMouseButton (0)) {
             Vector2 tempLocation = Input.touchCount > 0 ? Input.GetTouch (0).position : (Vector2)Input.mousePosition;
             touchLocation = new Vector2 (tempLocation.x, tempLocation.y);

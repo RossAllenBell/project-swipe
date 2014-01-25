@@ -1,4 +1,3 @@
-add building to upgrade attack
 flying monsters
 monsters that:
 	shields others from damage

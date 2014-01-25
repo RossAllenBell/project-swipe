@@ -4,7 +4,7 @@ public class EnemyWave1 : EnemyWave {
     
     float spawnCooldown = 1f;
     float lastKoboldSpawn = -10f;
-    int enemies = 30;
+    int enemies = 10;
 
     public override void Update() {
         if (lastKoboldSpawn < Time.time - spawnCooldown && enemies > 0) {
